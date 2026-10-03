@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday ❤️</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:'Poppins',sans-serif;
+      background:#050505;
+      color:white;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(255,0,100,.15), transparent 25%),
+        radial-gradient(circle at 80% 20%, rgba(255,215,0,.12), transparent 25%),
+        radial-gradient(circle at 50% 80%, rgba(120,0,255,.15), transparent 30%);
+      z-index:-3;
+    }
+
+    canvas{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:-2;
+      pointer-events:none;
+    }
+
+    section{
+      min-height:100vh;
+      padding:100px 7%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+    }
+
+    .glass{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+      border-radius:28px;
+      box-shadow:
+        0 30px 80px rgba(0,0,0,.5),
+        inset 0 1px 1px rgba(255,255,255,.12);
+    }
+
+    .hero{
+      text-align:center;
+      flex-direction:column;
+    }
+
+    .hero-small{
+      letter-spacing:8px;
+      font-size:13px;
+      text-transform:uppercase;
+      color:#ffd66b;
+      margin-bottom:20px;
+      animation:fadeDown 1.5s ease;
+    }
+
+    .hero h1{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(70px,12vw,170px);
+      font-weight:700;
+      line-height:.8;
+      background:linear-gradient(
+        90deg,
+        #fff1a8,
+        #ffb6d9,
+        #ffffff,
+        #d7a5ff,
+        #ffe18a
+      );
+      background-size:300%;
+      -webkit-background-clip:text;
+      color:transparent;
+      animation:goldMove 6s linear infinite, heroIn 1.6s ease;
+      text-shadow:0 0 60px rgba(255,200,100,.1);
+    }
+
+    .hero h2{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(35px,6vw,75px);
+      margin-top:20px;
+      font-weight:600;
+    }
+
+    .hero p{
+      max-width:700px;
+      margin:25px auto;
+      color:#d5d5d5;
+      line-height:1.9;
+      font-weight:300;
+    }
+
+    .scroll-btn{
+      margin-top:35px;
+      display:inline-block;
+      padding:14px 30px;
+      border-radius:50px;
+      border:1px solid rgba(255,255,255,.25);
+      color:white;
+      text-decoration:none;
+      transition:.4s;
+      background:rgba(255,255,255,.05);
+    }
+
+    .scroll-btn:hover{
+      transform:translateY(-4px);
+      background:white;
+      color:black;
+      box-shadow:0 0 30px rgba(255,255,255,.4);
+    }
+
+    .section-box{
+      width:min(1100px,100%);
+      padding:60px;
+    }
+
+    .section-title{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(45px,7vw,85px);
+      margin-bottom:25px;
+      background:linear-gradient(90deg,#fff,#ffcc74,#ff8ac8);
+      -webkit-background-clip:text;
+      color:transparent;
+    }
+
+    .section-text{
+      color:#ccc;
+      font-size:16px;
+      line-height:2;
+      max-width:850px;
+    }
+
+    .quote{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(30px,5vw,55px);
+      line-height:1.3;
+      margin-top:35px;
+      color:#fff3c9;
+    }
+
+    .photo-wrap{
+      width:300px;
+      height:400px;
+      margin:40px auto;
+      padding:7px;
+      border-radius:30px;
+      background:linear-gradient(135deg,#ffd86f,#ff6eb4,#8d62ff);
+      animation:float 4s ease-in-out infinite;
+      box-shadow:0 0 60px rgba(255,100,180,.25);
+    }
+
+    .photo-wrap img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:24px;
+      display:block;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:22px;
+      margin-top:40px;
+    }
+
+    .card{
+      padding:30px;
+      min-height:220px;
+      transition:.5s;
+    }
+
+    .card:hover{
+      transform:translateY(-12px) scale(1.02);
+      box-shadow:0 30px 70px rgba(255,100,160,.16);
+    }
+
+    .card span{
+      font-size:38px;
+    }
+
+    .card h3{
+      font-family:'Cormorant Garamond',serif;
+      font-size:31px;
+      margin:15px 0;
+    }
+
+    .card p{
+      color:#bcbcbc;
+      font-size:14px;
+      line-height:1.8;
+    }
+
+    .memory{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:40px;
+      align-items:center;
+    }
+
+    .memory-img{
+      height:500px;
+      border-radius:30px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .memory-img img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transition:1s;
+    }
+
+    .memory-img:hover img{
+      transform:scale(1.1);
+    }
+
+    .memory-img::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(transparent,rgba(0,0,0,.5));
+    }
+
+    .big-message{
+      text-align:center;
+    }
+
+    .big-message h2{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(55px,10vw,130px);
+      line-height:.9;
+    }
+
+    .big-message .love{
+      background:linear-gradient(90deg,#ffb2d4,#fff2ad,#d3b0ff);
+      -webkit-background-clip:text;
+      color:transparent;
+    }
+
+    .cake{
+      font-size:110px;
+      margin-top:40px;
+      animation:float 3s ease-in-out infinite;
+      filter:drop-shadow(0 0 35px rgba(255,177,0,.35));
+    }
+
+    .music-btn{
+      position:fixed;
+      right:25px;
+      bottom:25px;
+      width:55px;
+      height:55px;
+      border-radius:50%;
+      border:1px solid rgba(255,255,255,.2);
+      background:rgba(0,0,0,.55);
+      color:white;
+      font-size:22px;
+      cursor:pointer;
+      backdrop-filter:blur(12px);
+      z-index:20;
+      transition:.3s;
+    }
+
+    .music-btn:hover{
+      transform:scale(1.1);
+      background:#fff;
+      color:#000;
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(70px);
+      transition:1.2s cubic-bezier(.17,.67,.3,1);
+    }
+
+    .reveal.active{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    footer{
+      text-align:center;
+      padding:50px 20px;
+      color:#777;
+      font-size:13px;
+      letter-spacing:2px;
+    }
+
+    @keyframes goldMove{
+      0%{background-position:0%;}
+      100%{background-position:300%;}
+    }
+
+    @keyframes heroIn{
+      from{
+        opacity:0;
+        transform:scale(.8);
+        filter:blur(20px);
+      }
+      to{
+        opacity:1;
+        transform:scale(1);
+        filter:blur(0);
+      }
+    }
+
+    @keyframes fadeDown{
+      from{
+        opacity:0;
+        transform:translateY(-30px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    @keyframes float{
+      0%,100%{
+        transform:translateY(0px);
+      }
+      50%{
+        transform:translateY(-18px);
+      }
+    }
+
+    @media(max-width:850px){
+      section{
+        padding:80px 5%;
+      }
+
+      .section-box{
+        padding:35px 25px;
+      }
+
+      .cards{
+        grid-template-columns:1fr;
+      }
+
+      .memory{
+        grid-template-columns:1fr;
+      }
+
+      .memory-img{
+        height:380px;
+      }
+
+      .hero h1{
+        font-size:75px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<audio id="birthdayMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<button class="music-btn" onclick="toggleMusic()">♫</button>
+
+<section class="hero">
+  <div class="hero-small">A Special Day For A Special Person</div>
+
+  <h1>Happy</h1>
+  <h1>Birthday</h1>
+
+  <h2>YOUR NAME ❤️</h2>
+
+  <p>
+    Today isn't just another day.
+    It's the day someone truly special came into this world.
+    May this year bring endless happiness, beautiful memories,
+    success, love and everything your heart desires.
+  </p>
+
+  <a href="#story" class="scroll-btn">Open Your Surprise ↓</a>
+</section>
+
+<section id="story">
+  <div class="section-box glass reveal">
+
+    <h2 class="section-title">Today Is All About You.</h2>
+
+    <p class="section-text">
+      Some people enter our lives and quietly make everything better.
+      Their presence becomes comfort, their smile becomes happiness,
+      and their memories become something we never want to lose.
+      Today is a celebration of you, your journey, your beautiful heart,
+      and all the wonderful moments still waiting for you.
+    </p>
+
+    <div class="photo-wrap">
+      <img src="photo1.jpg" alt="Birthday Person">
+    </div>
+
+    <p class="quote">
+      “May your life always shine brighter than every candle
+      on your birthday cake.”
+    </p>
+
+  </div>
+</section>
+
+<section>
+  <div class="section-box reveal">
+
+    <h2 class="section-title">A Few Wishes For You ✨</h2>
+
+    <div class="cards">
+
+      <div class="card glass">
+        <span>❤️</span>
+        <h3>Love</h3>
+        <p>
+          May you always be surrounded by people who genuinely love,
+          respect and appreciate you.
+        </p>
+      </div>
+
+      <div class="card glass">
+        <span>✨</span>
+        <h3>Success</h3>
+        <p>
+          May every dream you carry in your heart slowly turn into reality.
+        </p>
+      </div>
+
+      <div class="card glass">
+        <span>🌙</span>
+        <h3>Peace</h3>
+        <p>
+          May your heart always find peace, even during life's difficult days.
+        </p>
+      </div>
+
+      <div class="card glass">
+        <span>😊</span>
+        <h3>Happiness</h3>
+        <p>
+          May your smile stay exactly the same and your days become happier.
+        </p>
+      </div>
+
+      <div class="card glass">
+        <span>🌎</span>
+        <h3>Adventure</h3>
+        <p>
+          May life take you to beautiful places and give you unforgettable experiences.
+        </p>
+      </div>
+
+      <div class="card glass">
+        <span>🎂</span>
+        <h3>Memories</h3>
+        <p>
+          May this birthday become another unforgettable page in your story.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <div class="section-box memory reveal">
+
+    <div class="memory-img">
+      <img src="photo2.jpg" alt="">
+    </div>
+
+    <div>
+
+      <h2 class="section-title">Beautiful Memories</h2>
+
+      <p class="section-text">
+        Time moves fast, but some moments stay forever.
+        The laughs, the random conversations, the small memories,
+        the pictures and the moments nobody else knows about —
+        those are the things that make life special.
+      </p>
+
+      <br>
+
+      <p class="section-text">
+        I hope your future gives you even more beautiful memories
+        than the ones you've already created.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <div class="section-box glass reveal">
+
+    <h2 class="section-title">A Message From The Heart</h2>
+
+    <p class="section-text">
+      On your birthday, I just want to remind you how valuable you are.
+      Life may change, people may change, situations may change,
+      but never forget the person you are.
+    </p>
+
+    <br>
+
+    <p class="section-text">
+      Keep dreaming.
+      Keep smiling.
+      Keep believing in yourself.
+      And whenever life becomes difficult,
+      remember that difficult chapters never mean the story is over.
+    </p>
+
+    <p class="quote">
+      The best days of your life may still be waiting for you.
+    </p>
+
+  </div>
+</section>
+
+<section>
+  <div class="big-message reveal">
+
+    <p class="hero-small">One Last Thing...</p>
+
+    <h2>Happy Birthday</h2>
+    <h2 class="love">YOUR NAME ❤️</h2>
+
+    <div class="cake">🎂</div>
+
+    <p class="section-text" style="margin:35px auto 0;">
+      May Allah bless you with happiness, health, success,
+      a long beautiful life and countless reasons to smile.
+      May every coming year be better than the previous one.
+    </p>
+
+  </div>
+</section>
+
+<footer>
+  MADE WITH ❤️ FOR YOUR SPECIAL DAY
+</footer>
+
+<script>
+
+  // Scroll Reveal
+  const reveals = document.querySelectorAll(".reveal");
+
+  function revealElements(){
+    reveals.forEach(el=>{
+      const top = el.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+
+      if(top < windowHeight - 100){
+        el.classList.add("active");
+      }
+    });
+  }
+
+  window.addEventListener("scroll", revealElements);
+  revealElements();
+
+
+  // Music
+  const music = document.getElementById("birthdayMusic");
+  let playing = false;
+
+  function toggleMusic(){
+
+    if(!playing){
+      music.play();
+      playing = true;
+    }
+    else{
+      music.pause();
+      playing = false;
+    }
+
+  }
+
+
+  // Luxury Particles
+  const canvas = document.getElementById("particles");
+  const ctx = canvas.getContext("2d");
+
+  let particles = [];
+
+  function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  resize();
+  window.addEventListener("resize", resize);
+
+  class Particle{
+
+    constructor(){
+
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+
+      this.size = Math.random() * 2 + .3;
+
+      this.speedY = Math.random() * .6 + .2;
+      this.speedX = (Math.random() - .5) * .3;
+
+      this.opacity = Math.random() * .7 + .2;
+
+    }
+
+    update(){
+
+      this.y -= this.speedY;
+      this.x += this.speedX;
+
+      if(this.y < -10){
+
+        this.y = canvas.height + 10;
+        this.x = Math.random() * canvas.width;
+
+      }
+
+    }
+
+    draw(){
+
+      ctx.beginPath();
+
+      ctx.arc(
+        this.x,
+        this.y,
+        this.size,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.fillStyle = `rgba(255,215,140,${this.opacity})`;
+
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = "rgba(255,200,100,.8)";
+
+      ctx.fill();
+
+    }
+
+  }
+
+  for(let i = 0; i < 100; i++){
+    particles.push(new Particle());
+  }
+
+  function animate(){
+
+    ctx.clearRect(
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    particles.forEach(p=>{
+      p.update();
+      p.draw();
+    });
+
+    requestAnimationFrame(animate);
+
+  }
+
+  animate();
+
+</script>
+
+</body>
+</html>
